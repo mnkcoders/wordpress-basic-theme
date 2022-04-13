@@ -1,0 +1,15 @@
+/******
+*
+*
+*/
+body,html{
+    /*background-color: #5a9afa;*/
+    font-family: Open Sans;
+    font-weight: 300;
+}
+
+
+#site-header,#site-footer{
+    background-color: #ae2426;
+    color: #ffffff;
+}

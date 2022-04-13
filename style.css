@@ -1,14 +1,172 @@
 /*******************************************************************************
-*
-* Theme Name: Menorca i Sobirania
-* Author: Coder#1
-* Description: Made in Menorca :D
-* Version: 1.1
-* License: GNU General Public License v2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
-* Text Domain: menorca_soberana
-*
-*******************************************************************************/
+ *
+ * Theme Name: Menorca
+ * Author: Coder#1
+ * Description: Made in Menorca :D
+ * Version: 1.1
+ * License: GNU General Public License v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: menorca_soberana
+ *
+ *******************************************************************************/
+
+body,html{
+    margin: 0;
+    background-color: #fafafa;
+    font-family: Courier New;
+}
+
+a{
+    text-decoration: none;
+}
+
+#site-header > .top-bar > .wrap,
+#site-header > .header-main > .wrap,
+#site-content > .wrap,
+#site-footer > .bottom-bar > .wrap,
+#site-footer > .footer-widgets > .wrap{
+    
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+/*#site-header,#site-footer{ background-color: #ae2426; color: #ffffff; }*/
+#site-header a,#site-footer a{
+    color: #fafafa;
+}
+#site-header > .top-bar,
+#site-footer > .bottom-bar{
+    background-color: rgba(0,0,0,0.15);
+    color: #fafafa;
+}
+#site-header ul.menu, #site-footer ul.menu{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+#site-header ul.menu > li.menu-item,
+#site-footer .bottom-bar ul.menu > li.menu-item{
+    display: inline-block;
+    vertical-align: top;
+}
+#site-header ul.menu > li.menu-item > a,
+#site-footer ul.menu > li.menu-item > a{
+    display: block;
+}
+#site-footer > .bottom-bar .textwidget,
+#site-header > .top-bar ul.menu > li.menu-item > a,
+#site-footer > .bottom-bar ul.menu > li.menu-item > a{
+    display: block;
+    padding: 8px 0;
+}
+
+#site-header > .top-bar .widget-area .widget .textwidget{
+    padding: 8px 0;
+}
+
+#site-header #menu-main{
+    padding: 50px 0 0 0;
+}
+#site-header #menu-main > li.menu-item > a{
+    padding: 12px 6px;
+    font-size: 24px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+#site-header ul, #site-footer ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#site-header ul > li > a,
+#site-footer .bottom-bar ul > li > a{
+    display: block;
+}
+
+#site-content{
+    
+    overflow-x: hidden;
+    width: 100%;
+    
+}
+
+#site-footer{
+    
+}
+
+#site-footer > .footer-widgets{
+
+    
+}
+
+#site-footer > .footer-widgets .widget-area{
+    padding: 0 0 80px;
+}
+
+#site-footer > .footer-widgets ul > li{
+    padding: 8px 0;
+}
+
+
+.clearfix:after, .container:after{
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.container{
+    position: relative;
+}
+.container.solid{
+    background-color: #ffffff;
+}
+.container.col-9,.container.col-6,.container.col-3{
+    display: inline-block;
+    float: left;
+    vertical-align: top;
+}
+
+.container.col-12{ width: 100%; }
+.container.col-9{ width: 75%; }
+.container.col-6{ width: 50%; }
+.container.col-3{ width: 25%; }
+
+.container.right{ float: right; }
+.text-right{ text-align: right; }
+
+
+
+
+@media only screen and (max-width: 479px){
+}
+@media only screen and (min-width: 480px) and (max-width: 767px){ 
+}
+@media only screen and (min-width: 768px) and (max-width: 959px){ 
+}
+@media only screen and (min-width: 960px) and (max-width: 1199px){ 
+}
+@media only screen and (min-width: 1200px){
+    #site-footer{
+        bottom: 0;
+        position: fixed;
+        width: 100%;
+    }    
+}
+@media only screen and (min-width: 1200px) and (max-width: 1499px){ 
+}
+@media only screen and (min-width: 1500px){
+    
+}
+
+
+
+
+
+
 
 
 

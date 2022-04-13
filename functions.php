@@ -6,7 +6,9 @@ add_action('init', function() {
 
     //Scripts
     add_action('wp_enqueue_scripts', function() {
+        wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
         wp_enqueue_style('style', get_stylesheet_uri());
+        wp_enqueue_style('style-override', get_stylesheet_directory_uri() . '/override/style.css');
         wp_enqueue_script('script', get_template_directory_uri() . '/script.js', array(), '1.0.0', true);
     });
 
@@ -15,7 +17,7 @@ add_action('init', function() {
             array(
                 'top-menu' => __('Top Menu'),
                 'main-menu' => __('Main Menu'),
-                'legal-menu' => __('Legal Menu'),
+                'bottom-menu' => __('Bottom Menu'),
             )
     );
     
@@ -35,43 +37,43 @@ add_action('widgets_init', function() {
         register_sidebar(array(
             'name' => __('Top Bar'),
             'id' => 'top-bar',
-            'before_widget' => '<div>',
+            'before_widget' => '<div class="widget container left">',
             'after_widget' => '</div>',
-            'before_title' => '<h2 class="rounded">',
-            'after_title' => '</h2>',
+            'before_title' => '', //no title here
+            'after_title' => '',
         ));
     
         register_sidebar(array(
             'name' => __('Blog Sidebar'),
             'id' => 'sidebar',
-            'before_widget' => '<div>',
+            'before_widget' => '<div class="widget container">',
             'after_widget' => '</div>',
-            'before_title' => '<h2 class="rounded">',
+            'before_title' => '<h2 class="widget-title">',
             'after_title' => '</h2>',
         ));
     
         register_sidebar(array(
             'name' => __('Footer Widgets Left'),
             'id' => 'footer-widget-left',
-            'before_widget' => '<div>',
+            'before_widget' => '<div class="widget container">',
             'after_widget' => '</div>',
-            'before_title' => '<h2 class="rounded">',
+            'before_title' => '<h2 class="widget-title">',
             'after_title' => '</h2>',
         ));
         register_sidebar(array(
             'name' => __('Footer Widgets Right'),
             'id' => 'footer-widget-right',
-            'before_widget' => '<div>',
+            'before_widget' => '<div class="widget container">',
             'after_widget' => '</div>',
-            'before_title' => '<h2 class="rounded">',
+            'before_title' => '<h2 class="widget-title">',
             'after_title' => '</h2>',
         ));
         register_sidebar(array(
             'name' => __('Bottom Bar'),
             'id' => 'bottom-bar',
-            'before_widget' => '<div class="left">',
+            'before_widget' => '<div class="widget container col-6">',
             'after_widget' => '</div>',
-            'before_title' => '',
+            'before_title' => '', //no title here
             'after_title' => '',
         ));
 
