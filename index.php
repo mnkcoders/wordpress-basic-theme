@@ -35,8 +35,7 @@
                 </div>
             </div>
         </header>        
-        <main id="site-content">
-            <div class="wrap">
+        <main id="site-content" class="container">
                 <?php $post_type = array( get_post_type() , is_single() ? 'single' : 'loop' ); ?>            
                 <?php if( $post_type[0] === FALSE || is_404() ) : ?> 
                     <div class="content error-404">
@@ -47,11 +46,10 @@
                     <?php get_template_part( 'html/page' ); ?>
                 </div>
                 <?php else: ?>
-                <div class="content <?php print implode(' ', $post_type);  ?>">
+                <div class="container content <?php print implode(' ', $post_type);  ?>">
                     <?php get_template_part( 'html/' . implode('-', $post_type) ); ?>
                 </div>
                 <?php endif; ?>
-            </div>
         </main><!-- #site-content -->
         
         <footer id="site-footer" class="footer-group">
@@ -59,16 +57,15 @@
             <?php if( is_active_sidebar('footer-widget-left') || is_active_sidebar('footer-widget-right') ) : ?>
                 <div class="footer-widgets">
                     <div class="wrap clearfix">
-                        
                         <!-- footer widgets -->
                         <?php if (is_active_sidebar('footer-widget-left')) : ?>
-                        <div class="widget-area container <?php echo is_active_sidebar('footer-widget-right') ? 'col-6 left' : 'col-12'; ?>">
+                        <div class="widget-area container pad-top-md pad-bot-lg <?php echo is_active_sidebar('footer-widget-right') ? 'col-6 left' : 'col-12'; ?>">
                         <?php dynamic_sidebar('footer-widget-left') ?>
                         </div>
                         <?php endif; ?>
                         
                         <?php if (is_active_sidebar('footer-widget-right')) : ?>
-                        <div class="widget-area container <?php echo is_active_sidebar('footer-widget-left') ? 'col-6 right' : 'col-12'; ?>">
+                        <div class="widget-area container pad-top-md pad-bot-lg <?php echo is_active_sidebar('footer-widget-left') ? 'col-6 right' : 'col-12'; ?>">
                         <?php dynamic_sidebar('footer-widget-right') ?>
                         </div>
                         <?php endif; ?>
