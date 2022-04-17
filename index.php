@@ -6,8 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" >
         <?php wp_head(); ?>
     </head>
+<?php
+    $themeSetup = array(
+        'top_bar' => get_theme_mod('coders_topbar_layout', '' ),
+        'bottom_bar' =>get_theme_mod('coders_bottombar_layout', '' ),
+        'footer_widgets' => get_theme_mod('coders_footer_widgets', 0),
+    );
+?>
     <body <?php body_class(); ?>>
         <header id="site-header" class="header-group">
+            <?php if( strlen($themeSetup['top_bar']) ) : ?>
             <div class="top-bar container">
                 <div class="wrap clearfix">
                     <?php if( is_active_sidebar('top-bar') ) : ?>
@@ -21,6 +29,7 @@
                         'container' => FALSE )); ?>
                 </div>
             </div>
+            <?php endif; ?>
             <div class="header-main container">
                 <div class="wrap clearfix">
                     <div class="header-logo-wrapper container col-3">
@@ -74,6 +83,7 @@
                 </div>
             <?php endif; ?>
                 
+            <?php if( $themeSetup['bottom_bar'] !== 'none' ) : ?> 
             <div class="bottom-bar">
                 <div class="wrap clearfix">
                     
@@ -85,6 +95,7 @@
                         'container' => FALSE )); ?>
                 </div>
             </div><!-- .section-inner -->
+            <?php endif; ?>
         </footer><!-- #site-footer -->	
         <?php wp_footer(); ?>
     </body>

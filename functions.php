@@ -1,7 +1,7 @@
 <?php
 
 defined('ABSPATH') or die;
-    
+
 add_action('init', function() {
 
     //Scripts
@@ -12,14 +12,13 @@ add_action('init', function() {
         wp_enqueue_style('style', get_stylesheet_uri());
         wp_enqueue_script('script', get_template_directory_uri() . '/script.js', array(), '1.0.0', true);
 
-        $themeMod = get_theme_mod('coders_theme_color','red');
+        $themeVariation = get_theme_mod('coders_theme_color', 'red');
 
-        if(strlen($themeMod)){
-            wp_enqueue_style('style-' . $themeMod , sprintf('%s/override/%s.css',
-                    get_stylesheet_directory_uri(),
-                    $themeMod) );
+        if (strlen($themeVariation)) {
+            wp_enqueue_style('style-' . $themeVariation, sprintf('%s/override/%s.css',
+                            get_stylesheet_directory_uri(),
+                            $themeVariation));
         }
-        
     });
 
     //Menus
@@ -91,22 +90,44 @@ add_action('widgets_init', function() {
 
 add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
 
-    $settings = array(
-        'red' => __('Sakura','coders_themes'),
-        'sunset' => __('Sunset','coders_themes'),
-        'nature' => __('Nature','coders_themes'),
-        'ocean' => __('Ocean','coders_themes'),
-        'organic' => __('Organic','coders_themes'),
-        'golden' => __('Cornfield','coders_themes'),
-        //'glass' => __('Glass','coders_themes'),
+    $themeVaraiationSelect = array(
+        'red' => __('Sakura', 'coders_themes'),
+        'sunset' => __('Sunset', 'coders_themes'),
+        'nature' => __('Nature', 'coders_themes'),
+        'ocean' => __('Ocean', 'coders_themes'),
+        'organic' => __('Organic', 'coders_themes'),
+        'golden' => __('Cornfield', 'coders_themes'),
+            //'glass' => __('Glass','coders_themes'),
+    );
+
+    $topBottomLayout = array(
+        '' => __('Hidden', 'coders_themes'),
+        'widget' => __('Widgets Only', 'coders_themes'),
+        'menu' => __('Menu Only', 'coders_themes'),
+        'widget_menu' => __('Widgets and Menu', 'coders_themes'),
+        'menu_widget' => __('Menu and Widgets', 'coders_themes'),
+    );
+
+    $footerWidgets = array(
+        0 => __('Empty','coders_themes'),
+        1 => __('One Column','coders_themes'),
+        2 => __('Two Columns','coders_themes'),
+        3 => __('Three Columns','coders_themes'),
+        4 => __('Four Columns','coders_themes'),
     );
 
     //global $wp_customize;
-    $wp_customize->add_setting('coders_theme_color', $settings );
+    $wp_customize->add_setting('coders_theme_color', $themeVaraiationSelect);
+    $wp_customize->add_setting('coders_topbar_layout', $topBottomLayout);
+    $wp_customize->add_setting('coders_footer_widgets', $footerWidgets);
+    $wp_customize->add_setting('coders_bottom_bar_layout', $topBottomLayout);
+
+
     $wp_customize->add_section('coders_theme_setup', array(
         'title' => __('Coders Theme Setup', 'coders_themes'),
         'priority' => 30,
     ));
+
     $wp_customize->add_control(new WP_Customize_Control(
                     $wp_customize, //Pass the $wp_customize object (required)
                     'coders_theme_color_select', //Set a unique ID for the control
@@ -117,8 +138,42 @@ add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
                 'priority' => 10, //Determines the order this control appears in for the specified section
                 'section' => 'coders_theme_setup', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
                 'type' => 'select',
-                'choices' => $settings ) ) );
+                'choices' => $themeVaraiationSelect)));
+    $wp_customize->add_control(new WP_Customize_Control(
+                    $wp_customize, //Pass the $wp_customize object (required)
+                    'coders_theme_footer_widgets', //Set a unique ID for the control
+                    array(
+                'label' => __('Footer Widgets', 'coders_themes'), //Admin-visible name of the control
+                'description' => __('Display Footer Widget Areas'),
+                'settings' => 'coders_footer_widgets', //Which setting to load and manipulate (serialized is okay)
+                'priority' => 12, //Determines the order this control appears in for the specified section
+                'section' => 'coders_theme_setup', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+                'type' => 'select',
+                'choices' => $footerWidgets)));
+    $wp_customize->add_control(new WP_Customize_Control(
+                    $wp_customize, //Pass the $wp_customize object (required)
+                    'coders_theme_top_bar', //Set a unique ID for the control
+                    array(
+                'label' => __('Top Bar Layout', 'coders_themes'), //Admin-visible name of the control
+                'description' => __('Select your topbar layout'),
+                'settings' => 'coders_topbar_layout', //Which setting to load and manipulate (serialized is okay)
+                'priority' => 11, //Determines the order this control appears in for the specified section
+                'section' => 'coders_theme_setup', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+                'type' => 'select',
+                'choices' => $topBottomLayout)));
+    $wp_customize->add_control(new WP_Customize_Control(
+                    $wp_customize, //Pass the $wp_customize object (required)
+                    'coders_theme_bottom_bar', //Set a unique ID for the control
+                    array(
+                'label' => __('Bottom Bar Layout', 'coders_themes'), //Admin-visible name of the control
+                'description' => __('Select your bottom bar layout'),
+                'settings' => 'coders_bottom_bar_layout', //Which setting to load and manipulate (serialized is okay)
+                'priority' => 13, //Determines the order this control appears in for the specified section
+                'section' => 'coders_theme_setup', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+                'type' => 'select',
+                'choices' => $topBottomLayout)));
 });
+
 
 
 
