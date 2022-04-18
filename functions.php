@@ -110,6 +110,11 @@ add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
         'menu_widget' => __('Menu and Widgets', 'coders_themes'),
     );
 
+    $themeHeaderMode = array(
+        '' => __('Default', 'coders_themes'),
+        'fixed' => __('Fixed Header', 'coders_themes'),
+    );
+
     $footerWidgets = array(
         0 => __('Empty','coders_themes'),
         1 => __('One Column','coders_themes'),
@@ -122,6 +127,7 @@ add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
     $wp_customize->add_setting('coders_theme_color', $themeVaraiationSelect);
     $wp_customize->add_setting('coders_topbar_layout', $topBottomLayout);
     $wp_customize->add_setting('coders_footer_widgets', $footerWidgets);
+    $wp_customize->add_setting('coders_theme_fixed_header', $themeHeaderMode);
     $wp_customize->add_setting('coders_bottom_bar_layout', $topBottomLayout);
 
 
@@ -130,6 +136,17 @@ add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
         'priority' => 30,
     ));
 
+    $wp_customize->add_control(new WP_Customize_Control(
+                    $wp_customize, //Pass the $wp_customize object (required)
+                    'coders_theme_fixed_header', //Set a unique ID for the control
+                    array(
+                'label' => __('Fixed Header', 'coders_themes'), //Admin-visible name of the control
+                'description' => __('Set your header fixed'),
+                'settings' => 'coders_theme_fixed_header', //Which setting to load and manipulate (serialized is okay)
+                'priority' => 8, //Determines the order this control appears in for the specified section
+                'section' => 'coders_theme_setup', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
+                'type' => 'select',
+                'choices' => $themeHeaderMode)));
     $wp_customize->add_control(new WP_Customize_Control(
                     $wp_customize, //Pass the $wp_customize object (required)
                     'coders_theme_color_select', //Set a unique ID for the control
@@ -175,6 +192,14 @@ add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
                 'type' => 'select',
                 'choices' => $topBottomLayout)));
 });
+
+/**
+ * @param String $part
+ */
+function coders_theme_part( $part ){
+
+    get_template_part( 'html/' . preg_replace('/_/', '-', $part) );
+}
 
 class CodersTheme{
     /**

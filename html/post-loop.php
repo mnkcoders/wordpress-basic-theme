@@ -1,22 +1,22 @@
 <?php defined('ABSPATH') or die; ?>
 <?php if ( !is_front_page( ) ) : ?>
     <!-- contenido -->
-    <div class="header">
+    <div class="header container spa-bot-lg">
         <div class="container overlay">
             <h1 class="category-title wrap pad-top-xl pad-bot-md"><?php print get_queried_object()->name ?></h1>
         </div>
     </div>
 <?php endif; ?>
-<?php if( is_active_sidebar('sidebar') ) :  ?>
-<div class="sidebar container">
-    <!-- SIDEBAR OPENER -->
-    <?php dynamic_sidebar('sidebar'); ?>
-    <!-- SIDEBAR-CLOSER -->
-</div>
-<?php endif; ?>
 <?php if (have_posts()) : ?>
-    <div class="wrap clearfix">
-        <ul class="loop container grid-4">
+    <div class="wrap clearfix container">
+        <?php if( is_active_sidebar('sidebar') ) :  ?>
+        <div class="sidebar container col-3 pad-right-md">
+            <!-- SIDEBAR OPENER -->
+            <?php dynamic_sidebar('sidebar'); ?>
+            <!-- SIDEBAR-CLOSER -->
+        </div>
+        <?php endif; ?>
+        <ul class="loop container grid-4 col-9">
             <?php while ( have_posts()) : the_post(); ?>
             <li class="post container">
                     <div class="container post-image">
