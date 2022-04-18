@@ -9,24 +9,17 @@
 <?php
     $themeSetup = array(
         'top_bar' => get_theme_mod('coders_topbar_layout', '' ),
-        'bottom_bar' =>get_theme_mod('coders_bottombar_layout', '' ),
-        'footer_widgets' => get_theme_mod('coders_footer_widgets', 0),
+        'bottom_bar' =>get_theme_mod('coders_bottom_bar_layout', '' ),
+        'footer_widgets' => intval( get_theme_mod('coders_footer_widgets', 0) ),
     );
+    //var_dump($themeSetup);
 ?>
     <body <?php body_class(); ?>>
         <header id="site-header" class="header-group">
             <?php if( strlen($themeSetup['top_bar']) ) : ?>
-            <div class="top-bar container">
+            <div class="top-bar container <?php print $themeSetup['top_bar'] ?>">
                 <div class="wrap clearfix">
-                    <?php if( is_active_sidebar('top-bar') ) : ?>
-                    <div class="widget-area container col-6">
-                        <?php dynamic_sidebar('top-bar') ?>
-                    </div>
-                    <?php endif; ?>
-                    <?php wp_nav_menu( array(
-                        'theme_location' => 'top-menu',
-                        'menu_class'=> is_active_sidebar('top-bar') ? 'menu right text-right container col-6' : 'menu text-right container',
-                        'container' => FALSE )); ?>
+                    <?php get_template_part( 'html/top_bar_' . $themeSetup['top_bar'] ); ?>
                 </div>
             </div>
             <?php endif; ?>
@@ -62,37 +55,27 @@
         </main><!-- #site-content -->
         
         <footer id="site-footer" class="footer-group">
-            
-            <?php if( is_active_sidebar('footer-widget-left') || is_active_sidebar('footer-widget-right') ) : ?>
+            <?php if( $themeSetup['footer_widgets' ] > 0 ) : ?>
                 <div class="footer-widgets">
                     <div class="wrap clearfix">
                         <!-- footer widgets -->
-                        <?php if (is_active_sidebar('footer-widget-left')) : ?>
-                        <div class="widget-area container pad-top-md pad-bot-lg <?php echo is_active_sidebar('footer-widget-right') ? 'col-6 left' : 'col-12'; ?>">
-                        <?php dynamic_sidebar('footer-widget-left') ?>
-                        </div>
-                        <?php endif; ?>
-                        
-                        <?php if (is_active_sidebar('footer-widget-right')) : ?>
-                        <div class="widget-area container pad-top-md pad-bot-lg <?php echo is_active_sidebar('footer-widget-left') ? 'col-6 right' : 'col-12'; ?>">
-                        <?php dynamic_sidebar('footer-widget-right') ?>
-                        </div>
-                        <?php endif; ?>
-                        
+                        <?php for( $i = 0 ; $i < $themeSetup['footer_widgets'] ; $i++ ) : ?>
+                            <?php if (is_active_sidebar('footer-widget-'.($i+1))) : ?>
+                            <div class="widget-area container pad-top-md pad-bot-lg col-<?php
+                                print 12 / $themeSetup['footer_widgets'] ?>">
+                                <?php dynamic_sidebar('footer-widget-'.($i+1)) ?>
+                            </div>
+                            <?php endif; ?>
+                        <?php endfor; ?>
                     </div>
                 </div>
             <?php endif; ?>
                 
-            <?php if( $themeSetup['bottom_bar'] !== 'none' ) : ?> 
+            <?php if( strlen( $themeSetup['bottom_bar'] ) ) : ?> 
             <div class="bottom-bar">
-                <div class="wrap clearfix">
-                    
+                <div class="wrap clearfix <?php print $themeSetup['bottom_bar'] ?>">
                 <!-- bottom bar -->
-                    <?php dynamic_sidebar('bottom-bar') ?>
-                    <?php wp_nav_menu(array(
-                        'theme_location' => 'bottom-menu',
-                        'menu_class' => is_active_sidebar('bottom-bar') ? 'menu right container col-6 text-right' : 'menu container text-right',
-                        'container' => FALSE )); ?>
+                    <?php get_template_part( 'html/bottom_bar_' . $themeSetup['bottom_bar'] ); ?>
                 </div>
             </div><!-- .section-inner -->
             <?php endif; ?>

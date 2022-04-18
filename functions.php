@@ -1,6 +1,4 @@
-<?php
-
-defined('ABSPATH') or die;
+<?php defined('ABSPATH') or die;
 
 add_action('init', function() {
 
@@ -43,14 +41,20 @@ add_action('init', function() {
 
 add_action('widgets_init', function() {
 
-    register_sidebar(array(
-        'name' => __('Top Bar'),
-        'id' => 'top-bar',
-        'before_widget' => '<div class="widget container left">',
-        'after_widget' => '</div>',
-        'before_title' => '', //no title here
-        'after_title' => '',
-    ));
+    $footerWidgets = intval( get_theme_mod('coders_footer_widgets', 0));
+    $topBar = get_theme_mod('coders_topbar_layout', '');
+    $bottomBar = get_theme_mod('coders_bottom_bar_layout', '');
+    
+    if( $topBar === 'widget' || $topBar === 'widget_menu' || $topBar === 'menu_widget'){
+        register_sidebar(array(
+            'name' => __('Top Bar'),
+            'id' => 'top-bar',
+            'before_widget' => '<div class="widget container left">',
+            'after_widget' => '</div>',
+            'before_title' => '', //no title here
+            'after_title' => '',
+        ));
+    }
 
     register_sidebar(array(
         'name' => __('Blog Sidebar'),
@@ -60,33 +64,31 @@ add_action('widgets_init', function() {
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ));
+    
+    if( $footerWidgets > 0 ){
+        for( $i = 0 ; $i < $footerWidgets ; $i++ ){
+            register_sidebar(array(
+                'id' => 'footer-widget-'.($i+1),
+                'name' => __('Footer Widgets ' . ($i+1) ),
+                'before_widget' => sprintf( '<div class="widget container bot-md footer-widget-%s">', $i+1 ),
+                'after_widget' => '</div>',
+                'before_title' => '<h2 class="widget-title">',
+                'after_title' => '</h2>',
+            ));
+        }
+    }
 
-    register_sidebar(array(
-        'name' => __('Footer Widgets Left'),
-        'id' => 'footer-widget-left',
-        'before_widget' => '<div class="widget container bot-md">',
-        'after_widget' => '</div>',
-        'before_title' => '<h2 class="widget-title">',
-        'after_title' => '</h2>',
-    ));
-    register_sidebar(array(
-        'name' => __('Footer Widgets Right'),
-        'id' => 'footer-widget-right',
-        'before_widget' => '<div class="widget container">',
-        'after_widget' => '</div>',
-        'before_title' => '<h2 class="widget-title">',
-        'after_title' => '</h2>',
-    ));
-    register_sidebar(array(
-        'name' => __('Bottom Bar'),
-        'id' => 'bottom-bar',
-        'before_widget' => '<div class="widget container col-6">',
-        'after_widget' => '</div>',
-        'before_title' => '', //no title here
-        'after_title' => '',
-    ));
+    if( $bottomBar === 'widget' || $bottomBar === 'widget_menu' || $bottomBar === 'menu_widget'){
+        register_sidebar(array(
+            'name' => __('Bottom Bar'),
+            'id' => 'bottom-bar',
+            'before_widget' => '<div class="widget container">',
+            'after_widget' => '</div>',
+            'before_title' => '', //no title here
+            'after_title' => '',
+        ));
+    }
 });
-
 
 add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
 
@@ -173,6 +175,22 @@ add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
                 'type' => 'select',
                 'choices' => $topBottomLayout)));
 });
+
+class CodersTheme{
+    /**
+     * @var CodersTheme
+     */
+    private static $_instance = null;
+    /**
+     * @return CodersTheme
+     */
+    public static function instance(  ){
+        if( self::$_instance === null ){
+            self::$_instance = new CodersTheme();
+        }
+        return self::$_instance;
+    }
+}
 
 
 
